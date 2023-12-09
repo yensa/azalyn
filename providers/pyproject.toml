@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "providers"
+version = "0.1.0"
+description = ""
+authors = ["Romain Libert <romainlibert291091@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+httpx = "^0.25.2"
+beautifulsoup4 = "^4.12.2"
+thefuzz = "^0.20.0"
+redis = "^5.0.1"
+python-driver = "^0.0.2"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.1.7"
+ipython = "^8.18.1"
+pdbpp = "^0.10.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
