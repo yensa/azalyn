@@ -7,7 +7,7 @@ from .exceptions import JobFailure
 
 JOB_NAME = "TOP_ACHAT_PRICE_FETCHER"
 
-extract_price_regex = re.compile(r"(\d+\.\d+).*€")
+extract_price_regex = re.compile(r"(\d+€\d+)")
 
 
 def fetch_price(url: str, client: httpx.Client) -> float:
@@ -19,13 +19,13 @@ def fetch_price(url: str, client: httpx.Client) -> float:
 
     document = BeautifulSoup(response.content, features="html.parser")
 
-    el = document.find("span", class_="offer-price__price")
+    el = document.find("aside").find("div", class_="price").find("div")
 
     if not (result := extract_price_regex.search(el.text)):
         raise JobFailure(JOB_NAME, "Could not parse the price")
 
     try:
-        price = float(result.group(1))
+        price = float(result.group(1).replace("€", "."))
     except TypeError as e:
         raise JobFailure(JOB_NAME, "Price was not a float") from e
 
